@@ -1,0 +1,9 @@
+1.内置函数
+构造器：__init__
+隐藏内置变量：__dict__
+全局有效：__all__
+隐藏类：__class__
+
+2.装饰器
+定义类方法：@classmethod
+定义静态方法：@staticmethod
