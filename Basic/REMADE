@@ -3,7 +3,19 @@
 隐藏内置变量：__dict__
 全局有效：__all__
 隐藏类：__class__
+私有化：__
+公有化：__name__
+返回闭包属性：__closure__
+枚举成员：__members__
+获取闭包的变量：__closure__[0].cell_contents
+返回类的len方法长度：__len__
+返回bool方法：__bool__
 
 2.装饰器
 定义类方法：@classmethod
 定义静态方法：@staticmethod
+调用装饰器方法：@decorator
+
+3.关键字
+全局变量：global
+表明非本地变量：nonlocal
