@@ -19,3 +19,7 @@
 3.关键字
 全局变量：global
 表明非本地变量：nonlocal
+
+4.常用语法
+(1):转译Ascll码：import urllib.parse  import string
+    urllib.parse.quote(final_url,safe=string.printable)
