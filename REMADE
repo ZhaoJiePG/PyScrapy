@@ -19,7 +19,9 @@
 3.关键字
 全局变量：global
 表明非本地变量：nonlocal
+查看对象的所有方法：dir
 
 4.常用语法
-(1):转译Ascll码：import urllib.parse  import string
+(1)汉字转译Ascll码：import urllib.parse  import string
     urllib.parse.quote(final_url,safe=string.printable)
+    或者urllib.parse.urlencode(params)

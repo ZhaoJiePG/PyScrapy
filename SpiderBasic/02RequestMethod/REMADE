@@ -1,0 +1,40 @@
+1.get传参
+(1)汉字报错：解释器ascll没有汉字，url汉字转码
+    urllib.parse.quote safe="string.promttable"
+(2)字典传参
+    urllib.parse.urlencode()
+
+post:
+    urllib.request.openurl(url,data="服务器接收的数据")
+
+handler:处理器的自定义
+
+User-Agent:
+(1)模拟真实的浏览器发送请求：
+    1.百度批量搜索
+    2.检查元素(User-Agent大全)
+(2)request.add_header(动态添加head数据)
+(3)响应头response_header
+(4)创建request：urllib.request.Request(url)
+
+2.IP代理：
+(1)免费的IP：时效性差，错误率高
+(2)付费IP：贵花钱，也有失效无法使用的
+IP分类：
+    透明：对方知道我们真实的IP
+    匿名：对方不知道我们真实的IP，知道你使用了代理
+    高匿：对方不知道我们真实的IP，也不知道我们使用了代理
+
+handler：
+(1)系统的urlopen()不支持代理的添加
+    创建对应的处理器(handler)
+    1.代理处理器：urllib.request.ProxyHandler(proxy)
+    2.创建opener：urllib.request.build_opener(proxy_handler)
+    3.opener.open(url)请求访问
+
+auth认证handler
+Cookiehandler
+URLRrror
+resquests(第三方模块)：简单易用
+数据解析：
+数据存储：json，csv

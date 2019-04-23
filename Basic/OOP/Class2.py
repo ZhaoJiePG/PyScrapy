@@ -23,3 +23,8 @@ print(Person.sum)
 print(person1.name)
 print(person1.age)
 print(person1.school)
+
+
+
+
+

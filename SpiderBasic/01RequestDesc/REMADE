@@ -55,14 +55,18 @@
         4.数据持久化
         python3(原生提供的模块)：urllib.request
             (1)urlopen:
+                1.返回response对象
+                2.response.read()
+                3.bytes.decode("utf-8")
             (2)get:传参
+                1.汉字报错：解释器ascll没有汉字，汉字转码
+                urllib.parse.quote(final_url,safe=string.printable)
             (3)post
             (4)handle处理器的自定义
             (5)urlError
         5.request(第三方)
         6.数据解析：xpath，bs4
         7.数据存储
-
 
 
 
