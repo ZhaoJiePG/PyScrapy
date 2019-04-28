@@ -5,7 +5,7 @@
 import urllib.request
 
 # 1.数据url
-url = 'https://www.yaozh.com/member/'
+url = 'https://mail.qq.com/cgi-bin/frame_html?sid=LiblK-GYO40zaC5y&r=7fea288cf954ad2151192eaf0a343903'
 # 2.添加请求头
 headers = {
     'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36'
