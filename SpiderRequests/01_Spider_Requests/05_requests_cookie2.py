@@ -21,9 +21,11 @@ login_form_data = {
     'backurl': 'https%3A%2F%2Fwww.yaozh.com%2F',
 }
 login_response = session.post(login_url, data=login_form_data, headers=headers)
+
+# 验证是否成功
 print(login_response.content.decode())
 
 # 2.登录成功之后 带着 有效的cookies 访问 请求目标数据
 data = session.get(member_url, headers=headers).content.decode()
 
-print(data)
+# print(data)

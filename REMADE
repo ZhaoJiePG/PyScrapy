@@ -25,3 +25,4 @@
 (1)汉字转译Ascll码：import urllib.parse  import string
     urllib.parse.quote(final_url,safe=string.printable)
     或者urllib.parse.urlencode(params)
+(2)enumerate:返回迭代器的序号和值
