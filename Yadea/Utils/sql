@@ -1,0 +1,13 @@
+create table test.spider_national_map(province varchar(256),city varchar(256),county varchar(256),town varchar(256))
+INSERT into table spider_national_map
+SELECT a.name as province,
+case when b.name='市辖区' then a.name else b.name end as city,
+c.name as county,
+d.name as town
+from spider_provincer as a
+left join spider_city as b
+on SUBSTRING(a.link,1,56)= SUBSTRING(b.link,1,56)
+left join spider_county as c
+on  SUBSTRING(b.link,1,56)= SUBSTRING(c.link,1,56)
+left join spider_town as d
+on  SUBSTRING(c.link,1,59)= SUBSTRING(d.link,1,59)
