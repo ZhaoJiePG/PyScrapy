@@ -48,21 +48,26 @@ data_path= 'H:\\Pythons\\PyData\\PyScrapy\\Yadea\data\\'
 # # 保存乡镇信息
 # import_csv(town,'town',data_path)
 
-# # 获取的乡镇url
+# 获取的乡镇url
 # town_url = get_csv(data_path,'town','link')
 # # 获取街道信息
 # village = getVillage(town_url)
 # # 保存街道信息
 # import_csv(village,'village',data_path)
 
-df = get_df(data_path,'province')
-csv2mysql('test','spider_provincer',df)
 
-df = get_df(data_path,'city')
-csv2mysql('test','spider_city',df)
-
-df = get_df(data_path,'county')
-csv2mysql('test','spider_county',df)
-
-df = get_df(data_path,'town')
-csv2mysql('test','spider_town',df)
+# 存入mysql
+# df = get_df(data_path,'province')
+# csv2mysql('test','spider_province',df)
+#
+# df = get_df(data_path,'city')
+# csv2mysql('test','spider_city',df)
+#
+# df = get_df(data_path,'county')
+# csv2mysql('test','spider_county',df)
+#
+# df = get_df(data_path,'town')
+# csv2mysql('test','spider_town',df)
+#
+# df = get_df(data_path,'village')
+# csv2mysql('test','spider_village',df)

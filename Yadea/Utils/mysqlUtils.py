@@ -21,7 +21,7 @@ def make_table_sql(df):
     make_table = []
     for item in columns:
         if 'int' in types[item]:
-            char = item + ' INT'
+            char = item + ' BIGINT'
         elif 'float' in types[item]:
             char = item + ' FLOAT'
         elif 'object' in types[item]:

@@ -15,6 +15,14 @@ user_agent_list = [
 # 每次请求的浏览器不一样
 random_user_agent = random.choice(user_agent_list)
 
+# 代理IP
+free_proxy={
+    'http':'120.83.111.75:9999',
+    'http':'112.85.129.166:9999',
+    'http':'221.218.102.146:33323',
+    'http':'120.83.111.19:9999',
+    'http':'223.241.118.33:8010',
+}
 
 def getUrl(url):
     headers = {'User-Agent': random_user_agent}
