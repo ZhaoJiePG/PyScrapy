@@ -83,3 +83,6 @@ S 支持对换行的支持
 la = 'PythonC#\nJava'
 print(re.findall('c#', la, re.I))
 print(re.findall('c#.{1}', la, re.I | re.S))
+
+
+

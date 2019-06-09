@@ -1,0 +1,17 @@
+splash提供的http接口
+
+对于抓取网页，最重要的就是 : render.html
+
+渲染html
+
+curl 'http://localhost:8050/render.html?url=http://www.baidu.com/&timeout=30&wait=0.5'
+
+# curl 'http://localhost:8050/render.html?url=http://www.baidu.com/&timeout=30&wait=0.5' -X POST
+
+# http://localhost:8050/info?wait=0.5&images=1&expand=1&timeout=90.0&url=http%3A%2F%2Fwww.baidu.com&lua_source=function+main%28splash%2C+args%29%0D%0A++assert%28splash%3Ago%28args.url%29%29%0D%0A++assert%28splash%3Await%280.5%29%29%0D%0A++return+%7B%0D%0A++++html+%3D+splash%3Ahtml%28%29%2C%0D%0A++++png+%3D+splash%3Apng%28%29%2C%0D%0A++++har+%3D+splash%3Ahar%28%29%2C%0D%0A++%7D%0D%0Aend
+
+参数解读：
+
+url：必填，要请求的网址
+timeout：选填，超时时间
+wait：选填，页面加载完毕后，等待的时间

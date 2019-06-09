@@ -22,6 +22,7 @@ for cookie in cookies_list:
 
 # 字典推导式
 cook_dict = {cookie.split('=')[0]:cookie.split('=')[1] for cookie in cookies.split('; ')}
+print(cook_dict)
 
 response = requests.get(member_url, headers=headers, cookies=cook_dict)
 

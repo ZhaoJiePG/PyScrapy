@@ -1,0 +1,30 @@
+资料分享：
+《PyCon2018北京站》
+https://shimo.im/docs/QgPUss7mLQYTOjWe/
+
+Splash是一个针对js的渲染服务。它内置了一个浏览器和http接口。基于Python3和Twisted引擎。所以可以异步处理任务。
+
+安装（只有linux和mac能安装）：
+https://splash.readthedocs.io/en/stable/install.html
+
+首先需要安装docker
+docker是什么？
+Docker是基于Go语言实现的开源容器项目，诞生于2013年初。
+所谓容器，可以简单地理解为隔断。（桶装方便面）
+
+docker hub：镜像服务器
+
+安装：
+docker pull scrapinghub/splash
+
+500M
+
+运行：
+docker run -p 8050:8050 -p 5023:5023 scrapinghub/splash
+
+访问
+http://localhost:8050
+
+修改网址，点击“Render me!”
+
+lua脚本语言

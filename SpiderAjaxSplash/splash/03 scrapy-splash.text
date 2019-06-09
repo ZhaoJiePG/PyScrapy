@@ -1,0 +1,36 @@
+scrapy-splash是一个让scrapy结合splash，进行动态抓取的库
+
+安装：
+pip install scrapy-splash
+
+文档：
+https://github.com/scrapy-plugins/scrapy-splash
+
+使用：
+创建scrapy项目：
+scrapy startproject scrapysplashtest
+
+创建爬虫：
+scrapy genspider taobao www.taobao.com
+
+修改settings文件：
+添加SPLASH_URL：
+SPLASH_URL = 'http://localhost:8050'
+
+添加下载器中间件：
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
+
+启用爬虫去重中间件：
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
+
+设置自定义的去重类：
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+配置缓存后端
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'

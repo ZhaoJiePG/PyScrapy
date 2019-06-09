@@ -1,0 +1,15 @@
+create table hive.dict.dict_spider_national_map as
+SELECT a.name as province,
+case when b.name='市辖区' then a.name else b.name end as city,
+c.name as county,
+d.name as town,
+e.name as village
+from fanruan_mysql.test.spider_province as a
+left join fanruan_mysql.test.spider_city as b
+on SUBSTRING(a.link,1,56)= SUBSTRING(b.link,1,56)
+left join fanruan_mysql.test.spider_county as c
+on  SUBSTRING(cast(b.code as varchar),1,4)= SUBSTRING(cast(c.code as varchar),1,4)
+left join fanruan_mysql.test.spider_town as d
+on  SUBSTRING(cast(c.code as varchar),1,6)= SUBSTRING(cast(d.code as varchar),1,6)
+left join fanruan_mysql.test.spider_village as e
+on SUBSTRING(cast(e.code as varchar),1,9)=SUBSTRING(cast(d.code as varchar),1,9)
