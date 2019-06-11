@@ -1,10 +1,15 @@
 # Author:Aliex ZJ
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
+import datetime
+
 import pandas as pd
 import pymysql
 from lxml import etree
 import requests
+
+now_time = datetime.datetime.now().strftime('%Y-%m-%d')
+
 
 # 获取csv网址
 def getUrlList(csv_path, url_name):
@@ -20,28 +25,165 @@ def getUrlList(csv_path, url_name):
 
     return url_list
 
-# 解析中国商务网
-def praseChinaBusiness(url_list):
+
+# 解析中国商务网1  日期-产品-规格-价格
+def praseChinaBusiness1(url_list):
+    table = []
     # 定义请求头
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
-        'cookie': "CompNew=32557%40DATA_NATIONALPRICE%40Date%2cSuppName%2cSpec%2cSpecModelName%2cGrade%2cPrice%2cPriceXXChange%2cBottomPrice%2cHighPrice%2cAvgPrice%2cAvgPriceXXChange%2cProvinceName%2cPriceTell%2cPriceUnit%2cMarketName%2cAreaName%2cCityName%2cPortName%2cLocalityName%2cContract%2cPlaceOfDelivery%2cMarks%2cMainPrice|铝合金|CarID_32557&&&; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=hgicziuefdbqo1el1cydwxeb; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559693277,1559706263,1559780001,1560042660; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fHxL74yYnRHxzr0CM6qmxg1ehqKBuSVAiwCzKN7yZQ9Os1NFsz53hUkpVpnGa52DuRNzy3bWItuQphpxFIH1wLShgQ3uQCJzosWNx+cyE2lmyLfjpG+r5bptQ7jyyo1+dYGfluIn7vnEceNCaiS/3q0w=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560047871"
+        'cookie': 'CompNew=0; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=dktbkt55q4hhlu55tzkyky55; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559706263,1559780001,1560042660,1560127522; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fH4yeunqew1exUNl6etVB1vPXhK00v20l/rtSxJld2EVWSE71m086t5a3wNPQWY76X+8MPmeWI1OZLCSevsnvuSBAmmuQWULJ23imk3vLCe2KkVnuiOJLNLl4Qmnctq90qBB8Z5cx6lzgkuenq2JmvYQ=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560151284'
     }
-    url = url_list['中华商务网'][1]
-    print(url)
 
-    # session接受调用cookie
-    response = requests.get(url=url, headers=headers)
-    context = response.text
+    for i in range(0, len(url_list)):
+        url = url_list[i]['中华商务网1'][1]
+        # session接受调用cookie
+        response = requests.get(url=url, headers=headers)
+        context = response.text
 
-    # with open('login.txt','r') as f:
-    #     f.write(context)
+        # 解析
+        selector = etree.HTML(context)
+        date = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[1]/text()')
+        name = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[2]/text()')
+        num = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[3]/text()')
+        res_name = str(name[0]) + '(' + str(num[0]) + ')'
+        price = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[4]/text()')
+        table.append({'name': res_name, 'area': str(url_list[i]['中华商务网1'][0]), 'date': date[0], 'price': price[0],
+                      'add_time': now_time})
 
-    # 解析
-    selector = etree.HTML(context)
+    return table
 
-    date = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[2]/text()')
-    print(date)
+
+# 解析中国商务网2  产品-规格-日期-价格
+def praseChinaBusiness2(url_list):
+    table = []
+    # 定义请求头
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+        'cookie': 'CompNew=0; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=dktbkt55q4hhlu55tzkyky55; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559706263,1559780001,1560042660,1560127522; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fH4yeunqew1exUNl6etVB1vPXhK00v20l/rtSxJld2EVWSE71m086t5a3wNPQWY76X+8MPmeWI1OZLCSevsnvuSBAmmuQWULJ23imk3vLCe2KkVnuiOJLNLl4Qmnctq90qBB8Z5cx6lzgkuenq2JmvYQ=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560151284'
+    }
+
+    for i in range(0, len(url_list)):
+        url = url_list[i]['中华商务网2'][1]
+        # session接受调用cookie
+        response = requests.get(url=url, headers=headers)
+        context = response.text
+
+        # 解析
+        selector = etree.HTML(context)
+        date = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[3]/text()')
+        name = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[1]/text()')
+        num = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[2]/text()')
+        res_name = str(name[0]) + '(' + str(num[0]) + ')'
+        price = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[4]/text()')
+        table.append({'name': res_name, 'area': str(url_list[i]['中华商务网2'][0]), 'date': date[0], 'price': price[0],
+                      'add_time': now_time})
+
+    return table
+
+
+# 解析中国商务网3  产品-日期-地区-规格-价格(判断)
+def praseChinaBusiness3(url_list):
+    table = []
+    # 定义请求头
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+        'cookie': 'CompNew=0; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=dktbkt55q4hhlu55tzkyky55; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559706263,1559780001,1560042660,1560127522; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fH4yeunqew1exUNl6etVB1vPXhK00v20l/rtSxJld2EVWSE71m086t5a3wNPQWY76X+8MPmeWI1OZLCSevsnvuSBAmmuQWULJ23imk3vLCe2KkVnuiOJLNLl4Qmnctq90qBB8Z5cx6lzgkuenq2JmvYQ=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560151284'
+    }
+
+    for i in range(0, len(url_list)):
+        url = url_list[i]['中华商务网3'][1]
+        # session接受调用cookie
+        response = requests.get(url=url, headers=headers)
+        context = response.text
+        selector = etree.HTML(context)
+        # 解析
+        for j in range(1, 3):
+
+            date = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[2]/text()'.format(j))
+            name = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[1]/text()'.format(j))
+            num = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[4]/text()'.format(j))
+            area = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[3]/text()'.format(j))
+            res_name = str(name[0]) + '(' + str(num[0]) + ')'
+            price = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[5]/text()'.format(j))
+            # 判断是否重复城市存在
+            if area[0] == str(url_list[i]['中华商务网3'][0]):
+                area_list = []
+                for x in table:
+                    area_list.append(x['area'])
+                # print(area_list)
+                # 判断是否重复城市存在
+                if area[0] not in area_list:
+                    table.append(
+                        {'name': res_name, 'area': str(url_list[i]['中华商务网3'][0]), 'date': date[0], 'price': price[0],
+                         'add_time': now_time})
+            else:
+                continue
+
+    return table
+
+
+# 解析中国商务网4  日期-产品-规格-地区-价格(判断)
+def praseChinaBusiness4(url_list):
+    table = []
+    # 定义请求头
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+        'cookie': 'CompNew=0; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=dktbkt55q4hhlu55tzkyky55; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559706263,1559780001,1560042660,1560127522; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fH4yeunqew1exUNl6etVB1vPXhK00v20l/rtSxJld2EVWSE71m086t5a3wNPQWY76X+8MPmeWI1OZLCSevsnvuSBAmmuQWULJ23imk3vLCe2KkVnuiOJLNLl4Qmnctq90qBB8Z5cx6lzgkuenq2JmvYQ=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560151284'
+    }
+
+    for i in range(0, len(url_list)):
+        url = url_list[i]['中华商务网4'][1]
+        # session接受调用cookie
+        response = requests.get(url=url, headers=headers)
+        context = response.text
+        selector = etree.HTML(context)
+        # 解析
+        for j in range(1, 3):
+
+            date = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[1]/text()'.format(j))
+            name = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[2]/text()'.format(j))
+            num = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[3]/text()'.format(j))
+            area = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[4]/text()'.format(j))
+            res_name = str(name[0]) + '(' + str(num[0]) + ')'
+            price = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[5]/text()'.format(j))
+            if area[0][0:2] == str(url_list[i]['中华商务网4'][0]):
+                table.append(
+                    {'name': res_name, 'area': str(url_list[i]['中华商务网4'][0]), 'date': date[0], 'price': price[0],
+                     'add_time': now_time})
+            else:
+                continue
+
+    return table
+
+
+# 解析中国商务网5  产品-规格-日期-价格(取第二个)
+def praseChinaBusiness5(url_list):
+    table = []
+    # 定义请求头
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+        'cookie': 'CompNew=0; UserCount=50F+zk6pYMYaLB9DEbsmQVXIH7avJgZdFCNIlVNWP2mRuhYcc9jRJu8VOgNG54oSUkPk6IFXC90fKrXa/Ytnw0U67INIqgVL; Hm_lvt_8c905ec8d12584debce091e1b8c39fc3=1559366230,1559446331,1559693340; ASP.NET_SessionId=dktbkt55q4hhlu55tzkyky55; Hm_lvt_55f4388cb1206cf827c03a4f9ff5cbd0=1559706263,1559780001,1560042660,1560127522; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; CustInfo=50F+zk6pYMasBvSZvR0fH4yeunqew1exUNl6etVB1vPXhK00v20l/rtSxJld2EVWSE71m086t5a3wNPQWY76X+8MPmeWI1OZLCSevsnvuSBAmmuQWULJ23imk3vLCe2KkVnuiOJLNLl4Qmnctq90qBB8Z5cx6lzgkuenq2JmvYQ=; Hm_lpvt_55f4388cb1206cf827c03a4f9ff5cbd0=1560151284'
+    }
+
+    for i in range(0, len(url_list)):
+        url = url_list[i]['中华商务网5'][1]
+        # session接受调用cookie
+        response = requests.get(url=url, headers=headers)
+        context = response.text
+
+        # 解析
+        selector = etree.HTML(context)
+        date = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[3]/text()')
+        name = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[1]/text()')
+        num = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[2]/text()')
+        res_name = str(name[0]) + '(' + str(num[0]) + ')'
+        price = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[4]/text()')
+        table.append({'name': res_name, 'area': str(url_list[i]['中华商务网5'][0]), 'date': date[0], 'price': price[0],
+                      'add_time': now_time})
+
+    return table
+
 
 # 解析上海有色网
 def praseShangHaiYouSe(url_list):
@@ -69,15 +211,18 @@ def praseShangHaiYouSe(url_list):
         price = selector.xpath('//ul[@class="history-t-body"]/li[1]/div[3]/text()')
 
         # 保存数据
-        table.append({'name': name[0], 'area': str(url_list[i]['上海有色网'][0]), 'date': date[0], 'price': price[0]})
+        table.append({'name': name[0], 'area': str(url_list[i]['上海有色网'][0]), 'date': date[0], 'price': price[0],
+                      'add_time': now_time})
 
     return table
+
 
 # 保存csv格式
 def saveAsCsv(data, name):
     df = pd.DataFrame(data)
     df.to_csv('./data/{0}.csv'.format(name), sep=',', header=True, index=False, encoding='utf-8')
     print("保存成功")
+
 
 # 保存数据到mysql
 def saveToMysql(data):
@@ -108,41 +253,73 @@ def saveToMysql(data):
             make_table.append(char)
         return ','.join(make_table)
 
-
     def csv2mysql(db_name, table_name, df):
         # 创建database
-        cursor.execute('CREATE DATABASE IF NOT EXISTS {}'.format(db_name))
+        # cursor.execute('CREATE DATABASE IF NOT EXISTS {}'.format(db_name))
         # 选择连接database
         conn.select_db(db_name)
         # 创建table
-        cursor.execute('DROP TABLE IF EXISTS {}'.format(table_name))
-        cursor.execute('CREATE TABLE {}({})'.format(table_name,make_table_sql(df)))
+        # cursor.execute('DROP TABLE IF EXISTS {}'.format(table_name))
+        # cursor.execute('CREATE TABLE {}({})'.format(table_name,make_table_sql(df)))
+        # 删除今日数据
+        truncate_sql = 'DELETE FROM {0} where add_time={1}'.format(table_name, "\"" + now_time + "\"")
+        cursor.execute(truncate_sql)
         # 提取数据转list 这里有与pandas时间模式无法写入因此换成str 此时mysql上格式已经设置完成
         # df['日期'] = df['日期'].astype('str')
         values = df.values.tolist()
         # 根据columns个数
         s = ','.join(['%s' for _ in range(len(df.columns))])
         # executemany批量操作 插入数据 批量操作比逐个操作速度快很多
-        cursor.executemany('INSERT INTO {} VALUES ({})'.format(table_name,s), values)
+        cursor.executemany('INSERT INTO {} VALUES ({})'.format(table_name, s), values)
 
-    csv2mysql('test','RawPrice',data)
+    csv2mysql('test', 'RawPrice', data)
     conn.close()
 
+
 if __name__ == '__main__':
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网')[1]
+    # 获取中华商务网1
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
+    chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
+
+    # 获取中华商务网2
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
+    chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
+
+    # 获取中华商务网3
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
+    chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
+
+    # 获取中华商务网4
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
+    chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
+
+    # 获取中华商务网5
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
+    chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
+
     # 获取上海有色网url
     shangHaiYouSeUrl = getUrlList('./Data/RawUrl.csv', '上海有色网')
-    # 获取上海有色网数据
     shangHaiYouSeData = praseShangHaiYouSe(shangHaiYouSeUrl)
-    # 保存csv数据
-    saveAsCsv(shangHaiYouSeData,'上海有色网')
+    saveAsCsv(shangHaiYouSeData, '上海有色网')
+
     data1 = pd.read_csv('./Data/上海有色网.csv')
-    data2 = pd.read_csv('./Data/中华商务网.csv')
+    data2 = pd.read_csv('./Data/中华商务网1.csv')
+    data3 = pd.read_csv('./Data/中华商务网2.csv')
+    data4 = pd.read_csv('./Data/中华商务网3.csv')
+    data5 = pd.read_csv('./Data/中华商务网4.csv')
+    data6 = pd.read_csv('./Data/中华商务网5.csv')
     # 取数据交集
-    data = pd.merge(data1,data2,how='outer')
-    print(data)
+    data_1 = pd.merge(data1, data2, how='outer')
+    data_2 = pd.merge(data_1, data3, how='outer')
+    data_3 = pd.merge(data_2, data4, how='outer')
+    data_4 = pd.merge(data_3, data5, how='outer')
+    data_5 = pd.merge(data_4, data6, how='outer')
+
+    print(data_5)
     # 保存mysql
-    saveToMysql(data)
-
-
-    # praseChinaBusiness(url_list)
+    saveToMysql(data_5)
