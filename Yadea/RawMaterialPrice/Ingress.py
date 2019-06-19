@@ -220,8 +220,8 @@ def praseShangHaiYouSe(url_list):
 # 保存csv格式
 def saveAsCsv(data, name):
     df = pd.DataFrame(data)
-    df.to_csv('./data/{0}.csv'.format(name), sep=',', header=True, index=False, encoding='utf-8')
-    print("保存成功")
+    df.to_csv('./Data/{0}.csv'.format(name), sep=',', header=True, index=False, encoding='utf-8')
+    print('{0}.csv'.format(name)+"保存成功")
 
 
 # 保存数据到mysql

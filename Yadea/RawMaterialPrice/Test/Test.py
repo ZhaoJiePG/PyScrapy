@@ -14,3 +14,5 @@ table = []
 date = selector.xpath('//tr[@class="dmain_right_tab_list"][1]/td[1]/text()')
 
 print(date)
+
+

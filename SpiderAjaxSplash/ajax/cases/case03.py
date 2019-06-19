@@ -11,7 +11,8 @@ header = {
     }
 
 # url = 'https://api.feixiaohao.com/coinhisdata/raiden-network-token/1540252714000/1540339114000/'
-url = 'https://dncapi.feixiaohao.com/api/coin/charts?code=raiden-network-token&type=d&webp=0'
+# url = 'https://dncapi.feixiaohao.com/api/coin/charts?code=raiden-network-token&type=d&webp=0'
+url = 'https://dncapi.bqiapp.com/api/coin/web-charts?code=raiden-network-token&type=d&webp=0'
 response = requests.get(url,
                         headers=header,
                         timeout=5
