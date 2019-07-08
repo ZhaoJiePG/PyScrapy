@@ -26,3 +26,8 @@
     urllib.parse.quote(final_url,safe=string.printable)
     或者urllib.parse.urlencode(params)
 (2)enumerate:返回迭代器的序号和值
+
+5.生成pip安装目录
+pip freeze >requirements.txt
+一键安装pip
+ pip install -r requirements.txt
