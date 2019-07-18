@@ -12,7 +12,7 @@ option = webdriver.ChromeOptions()
 # option.add_argument('headless')
 
 driver = webdriver.Chrome(
-    executable_path='H:\Pythons\Spider\chromedriver2.exe',
+    executable_path='D:\Maven\PyScrapy\SpiderHeaderless\chromedriver.exe',
     chrome_options=option
 )
 

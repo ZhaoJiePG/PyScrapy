@@ -27,7 +27,7 @@ print(type(soup))
 
 # 2.格式化输出 补全
 result = soup.prettify()
-# print(result)
+print(result)
 
 # 3.解析数据
 # Tag标签对象

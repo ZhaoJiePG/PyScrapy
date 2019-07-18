@@ -12,7 +12,7 @@ option = webdriver.ChromeOptions()
 
 # 要换成适应自己操作系统的chromedriver
 driver = webdriver.Chrome(
-    executable_path='H:\Pythons\Spider\chromedriver2.exe',
+    executable_path='D:\Maven\PyScrapy\SpiderHeaderless\chromedriver.exe',
     chrome_options=option
 )
 

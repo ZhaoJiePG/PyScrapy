@@ -28,4 +28,7 @@ iOS (with ios-driver or appium)
 https://www.seleniumhq.org/docs/
 
 # 建议学习这个针对Python的文档：
-https://selenium-python.readthedocs.io
+https://selenium-python.readthedocs.io\
+
+# 阿里下载地址
+http://npm.taobao.org/mirrors/chromedriver/
