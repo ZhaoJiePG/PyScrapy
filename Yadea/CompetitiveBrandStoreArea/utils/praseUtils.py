@@ -28,8 +28,10 @@ class praseUtils():
         province = pcd['province']
         city = pcd['city']
         districd = pcd['district']
+        town = pcd['town']
+        street = pcd['town']
         # res = self.regex2str(r'\"province\"\:\"([\u4e00-\u9fa5]+)\"\,\"city\"\:([\u4e00-\u9fa5]+)\,\"city_level\"\:2\,\"district\"\:([\u4e00-\u9fa5]+)',data)
-        return [province,city,districd]
+        return [province,city,districd,town,street]
 
 # data = praseUtils().lonlat2pcd('91.156633','29.656875')
 # print(data)

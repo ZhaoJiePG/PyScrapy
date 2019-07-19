@@ -6,7 +6,7 @@ import time
 
 import requests
 
-from Yadea.CompetitiveBrandStoreAddress.utils.stringUtils import stringUtils
+from Yadea.CompetitiveBrandStoreArea.utils.stringUtils import stringUtils
 
 
 class requestsUtils():
