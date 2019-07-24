@@ -1,6 +1,8 @@
 # Author:Aliex ZJ
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
+import os
+
 import pandas as pd
 
 
@@ -8,7 +10,7 @@ class fileUtils():
     # 保存csv格式
     def saveAsCsv(self,data, name):
         df = pd.DataFrame(data).drop_duplicates()
-        df.to_csv("./datas/{}.csv".format(name), sep=',', header=True, index=False, encoding='utf-8')
+        df.to_csv("./Datas/{}.csv".format(name), sep=',', header=True, index=False, encoding='utf-8')
         print("{}.csv".format(name)+"保存成功")
 
     # 获取csv格式
@@ -32,7 +34,14 @@ class fileUtils():
             count = count+1
         return [count,str(data)]
 
-    # 读取合并数据集
+    # 获取文件夹下的所有文件名称
+    def eachFile(self,filepath):
+        list = []
+        pathDir =  os.listdir(filepath)
+        for allDir in pathDir:
+            child = os.path.join('%s%s' % (filepath, allDir))
+            list.append(child)
+        return list
 
 # a = fileUtils().getCsvFile("D:\Maven\PyScrapy\Yadea\CompetitiveBrandStoreArea\Datas\XingRi\新日.csv")
 # print(a)

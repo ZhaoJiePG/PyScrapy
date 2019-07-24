@@ -33,5 +33,21 @@ class praseUtils():
         # res = self.regex2str(r'\"province\"\:\"([\u4e00-\u9fa5]+)\"\,\"city\"\:([\u4e00-\u9fa5]+)\,\"city_level\"\:2\,\"district\"\:([\u4e00-\u9fa5]+)',data)
         return [province,city,districd,town,street]
 
+    # 地址返回经纬度
+    def addr2lonlat(self,name):
+        url = 'http://api.map.baidu.com/geocoding/v3/?address={0}&output=json&ak=K2WGZeDWlluoHpEpt5qo5Sx6VNyvffLB&callback=showLocation'
+        response = requests.get(url.format(name))
+        response.encoding = 'utf-8'
+        data = response.text.replace('showLocation&&showLocation(','').replace(')','')
+        res = json.loads(data)
+        lonlat=[]
+        status = json.loads(res)['status']
+        if status == 0:
+            # 保存经纬度
+            lon = json.loads(res)['result']['location']['lng']
+            lat = json.loads(res)['result']['location']['lat']
+            lonlat.append({'lon':lon,'lat':lat})
+        return lonlat
+
 # data = praseUtils().lonlat2pcd('91.156633','29.656875')
 # print(data)

@@ -39,7 +39,6 @@ class requestsUtils():
         # print(proxies)
 
         response = requests.get(url, headers=headers)
-        response.encoding = 'utf-8'
         data = response.text
         time.sleep(0.1)
         response.close()
