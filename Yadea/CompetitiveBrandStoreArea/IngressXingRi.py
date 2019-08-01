@@ -22,7 +22,7 @@ def XingRiIngress():
     # 获取每个省的ajax路径
     proList = fileUtils().getCsvFile('D:\Maven\PyScrapy\Yadea\CompetitiveBrandStoreArea\Datas\XingRi\新日.csv')
     # 循环获取数据
-    for index in range(31,32):
+    for index in range(0,32):
         provinceName = str(proList[index][0])
         ajaxPath = str(proList[index][1])
 
