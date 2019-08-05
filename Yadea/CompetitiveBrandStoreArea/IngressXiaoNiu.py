@@ -40,7 +40,7 @@ for item in dictDatas:
     town = pcd[3]
     street = pcd[4]
     # 5.保存数据字典
-    resdict = {'province':province,'city':city,'districd':districd,'town':town,'street':street,'name':name,'lon':lon,'lat':lat,'address':address}
+    resdict = {'province':province,'city':city,'districd':districd,'town':town,'street':street,'name':name.replace(' ',''),'lon':lon,'lat':lat,'address':address}
     print(resdict)
     dataList.append(resdict)
 
