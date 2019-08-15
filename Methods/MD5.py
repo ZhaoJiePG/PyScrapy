@@ -8,7 +8,6 @@ md = hashlib.md5()  # 构造一个md5
 md.update('date=1559175611000,1559176211000&ourSecretKey=outyadeaapi'.encode())
 print(md.hexdigest())  # 加密后的字符串
 
-
 # 加密库
 #   撞库
 # 加盐

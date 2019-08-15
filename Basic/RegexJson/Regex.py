@@ -42,9 +42,11 @@ print(re.findall('a[c-f]c', s))
 print(re.findall('a[^cfd]c', s))
 
 # 匹配数量,贪婪
+print("================================")
 a = 'python123 java456 php777'
 print(re.findall('[a-z]{3}', a))
 print(re.findall('[a-z]{3,6}', a))
+print("================================")
 
 # 非贪婪
 print(re.findall('[a-z]{3,6}?', a))
