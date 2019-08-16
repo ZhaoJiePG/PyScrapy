@@ -11,43 +11,56 @@ https://restapi.amap.com/v3/place/text?keywords=台铃&key=cc59dda499458518a676f
 http://www.qqddc.com/jxs.do?method=list&pb=40&pn=2
 '''
 import json
+from time import sleep
+
 import requests
 from lxml import etree
 
 from fileUtils import fileUtils
 
 # 高德接口url
-def getTaiLinApi(keywords,city):
-    print("爬取 "+city+"====="+keywords+" 门店信息")
+def getGaoDeApi(keywords):
     # 保存数据list
     storeList=[]
-    for page in range (99,101):
-        print('开始爬取：'+city+'-'+keywords+'-第'+str(page)+'页数据')
-        # 百度接口url
-        url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=cc59dda499458518a676fb0795bf235c&city={1}&offset=25&page={2}'\
-            .format(city,keywords,page)
-        # print(url)
+    # 获取循环爬取的城市
+    provinceFile = fileUtils().getCsvFile('H:\Pythons\PyData\PyScrapy\Yadea\BaiDuApi\Datas\province.csv')
+    for provinceItems in provinceFile:
+        cityQuery = provinceItems[0]
+        # 判断循环次数
+        url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=cc59dda499458518a676fb0795bf235c&city={1}&offset=20' \
+            .format(keywords,cityQuery)
         response = requests.get(url).text
-        print(response)
-        print(response['count'])
-        if(response['count']==0):
-            break
-        # 解析json
-        datasList = json.loads(response)['pois']
-        for items in datasList:
-            name = items['name']
-            address = items['address']
-            lonlat = items['location'].split(',')
-            lat = lonlat[0]
-            lng = lonlat[1]
-            province = items['pname']
-            city = items['cityname']
-            area = items['adname']
-            storeDict = {'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area}
-            print(storeDict)
-            storeList.append(storeDict)
-
-    print(storeList)
+        # 获取总页数
+        count = json.loads(response)['count']
+        count = int(int(count)/20+2)
+        # 开始循环
+        for page in range(1,count):
+            print('开始爬取：'+cityQuery+'-'+keywords+'-第'+str(page)+'页数据')
+            # 百度接口url
+            url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=cc59dda499458518a676fb0795bf235c&city={1}&offset=20&page={2}'\
+                .format(keywords,cityQuery,page)
+            print(url)
+            response = requests.get(url).text
+            sleep(0.1)
+            # 解析json
+            datasList = json.loads(response)['pois']
+            for items in datasList:
+                name = items['name']
+                address = items['address']
+                if (address == []):
+                    address = '无'
+                lonlat = items['location'].split(',')
+                lat = lonlat[0]
+                lng = lonlat[1]
+                province = items['pname']
+                city = items['cityname']
+                area = items['adname']
+                storeDict = {'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area}
+                print(storeDict)
+                storeList.append(storeDict)
+    # 保存数据
+    # print(storeList)
+    fileUtils().saveAsCsv(storeList,'{0}'.format(keywords))
 
 # 百度接口url
 def getBaiDuApi(query,region,num):
@@ -89,5 +102,5 @@ def getShiJieDianDongChe():
 if __name__ == '__main__':
     # getBaiDuApi('台铃','125',2)
     # getShiJieDianDongChe()
-#琼山区、龙华区、秀英区、美兰区
-    getTaiLinApi('海南省','台铃')
+    #琼山区、龙华区、秀英区、美兰区
+    getGaoDeApi('一点点')

@@ -96,7 +96,8 @@ def getWeatherHistory():
                 weatherList.append(weatherDict)
     fileUtils().saveAsCsv(weatherList,'Weathers/{}'.format(yearName))
 if __name__ == '__main__':
-# # 1.获取需要爬取的省市位置
-# # getProvinceCity()
-# # 2.获取详细城市的历史天气情况
+# 1.获取需要爬取的省市位置
+
+    # getProvinceCity()
+# 2.获取详细城市的历史天气情况
     getWeatherHistory()
