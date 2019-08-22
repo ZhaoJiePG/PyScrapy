@@ -193,7 +193,7 @@ def praseShangHaiYouSe(url_list):
     # 定义请求头
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
-        'cookie': 'SMM_device_id=a1a205c2-2b73-539b-a6b7-3f001bfd540b; _ga=GA1.2.1753996494.1559692706; _gid=GA1.2.1153050512.1559692706; SMM_session_id=11167d04-6d51-526c-88a6-52d6fc49ee8e; SMM_session_start_timestamp=1559779558317; Hm_lvt_9734b08ecbd8cf54011e088b00686939=1559692696,1559698828,1559698961,1559779558; Hm_lvt_50b0b45724f4f39e2a94cb8af0e9b547=1559692706,1559779558; Hm_lpvt_50b0b45724f4f39e2a94cb8af0e9b547=1559779558; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; Hm_lpvt_9734b08ecbd8cf54011e088b00686939=1559779578; SMM_auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjZWxscGhvbmUiOiIxMzYxNjY4MzM1MCIsImNvbXBhbnlfaWQiOjAsImNvbXBhbnlfc3RhdHVzIjowLCJjcmVhdGVfYXQiOjE1NTk3Nzk3MjUsImVtYWlsIjoia2FpamlhbmcudGFvQGNoaW5heGluemhpLmNvbSIsImVuX2VuZF90aW1lIjowLCJlbl9yZWdpc3Rlcl9zdGVwIjoxLCJlbl9yZWdpc3Rlcl90aW1lIjowLCJlbl9zdGFydF90aW1lIjowLCJlbl91c2VyX3R5cGUiOjAsImVuZF90aW1lIjoxNTgyNzMyNzk5LCJpc19tYWlsIjowLCJpc19waG9uZSI6MSwibGFuZ3VhZ2UiOiJjbiIsImx5X2VuZF90aW1lIjowLCJseV9zdGFydF90aW1lIjowLCJseV91c2VyX3R5cGUiOjAsInJlZ2lzdGVyX3RpbWUiOjEzNjIwMTk1NjIsInN0YXJ0X3RpbWUiOjE1MTk1NzQ0MDAsInVzZXJfaWQiOjQxMTU5NywidXNlcl9uYW1lIjoieGluemhpZGlhbmppMDIiLCJ1c2VyX3R5cGUiOjIsInp4X2VuZF90aW1lIjowLCJ6eF9zdGFydF90aW1lIjowLCJ6eF91c2VyX3R5cGUiOjB9.VQd_gll5uCpMkabd5_3n308KqEwdKVuuQdoSRZe42Dg'
+        'cookie': 'SMM_device_id=223c8667-1512-582b-87ff-eb162aa2e3e4; SMM_session_id=e24de27d-b7dc-559f-9dfb-8f0892bd9934; SMM_session_start_timestamp=1566432783777; Hm_lvt_9734b08ecbd8cf54011e088b00686939=1566432784; Hm_lpvt_9734b08ecbd8cf54011e088b00686939=1566433111; SMM_auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjZWxscGhvbmUiOiIxMzYxNjY4MzM1MCIsImNvbXBhbnlfaWQiOjAsImNvbXBhbnlfc3RhdHVzIjowLCJjcmVhdGVfYXQiOjE1NjY0MzMwOTksImVtYWlsIjoia2FpamlhbmcudGFvQGNoaW5heGluemhpLmNvbSIsImVuX2VuZF90aW1lIjowLCJlbl9yZWdpc3Rlcl9zdGVwIjoxLCJlbl9yZWdpc3Rlcl90aW1lIjowLCJlbl9zdGFydF90aW1lIjowLCJlbl91c2VyX3R5cGUiOjAsImVuZF90aW1lIjoxNTgyNzMyNzk5LCJpc19tYWlsIjowLCJpc19waG9uZSI6MSwibGFuZ3VhZ2UiOiIiLCJseV9lbmRfdGltZSI6MCwibHlfc3RhcnRfdGltZSI6MCwibHlfdXNlcl90eXBlIjowLCJyZWdpc3Rlcl90aW1lIjoxMzYyMDE5NTYyLCJzdGFydF90aW1lIjoxNTE5NTc0NDAwLCJ1c2VyX2lkIjo0MTE1OTcsInVzZXJfbmFtZSI6InhpbnpoaWRpYW5qaTAyIiwidXNlcl90eXBlIjoyLCJ1dWlkX3NoYTI1NiI6ImNkZjRhMDA3ZTJiMDJhMGM0OWZjOWI3Y2NmYmI4YTEwYzY0NGY2MzVlMTc2NWRjZjJhN2FiNzk0ZGRjN2VkYWMiLCJ6eF9lbmRfdGltZSI6MCwienhfc3RhcnRfdGltZSI6MCwienhfdXNlcl90eXBlIjowfQ.QA9Zhr8sezkTSLerMIcLEstV0LEE_esnHlrDz_wOpeA; referer_code=https%3A%2F%2Fhq.smm.cn%2Ftong%2Fcategory%2F201102250376'
     }
 
     for i in range(0, len(url_list)):
@@ -206,12 +206,13 @@ def praseShangHaiYouSe(url_list):
 
         # 解析
         selector = etree.HTML(context)
-        name = selector.xpath('//h3[@class="chart-data-left-pdt"]/text()')
-        date = selector.xpath('//ul[@class="history-t-body"]/li[1]/div[1]/text()')
-        price = selector.xpath('//ul[@class="history-t-body"]/li[1]/div[3]/text()')
+        name = selector.xpath('/html/body/div[1]/div[2]/div[1]/div/div[1]/div/div[1]/div/p[1]/text()')
+        date = selector.xpath('/html/body/div[1]/div[2]/div[1]/div/div[3]/div[2]/ul/table/tbody/tr[1]/td[1]/text()')
+        price = selector.xpath('/html/body/div[1]/div[2]/div[1]/div/div[3]/div[2]/ul/table/tbody/tr[1]/td[3]/text()')
+        price = (str(price[0]).replace('\n','').replace('\r','').replace(' ',''))
 
         # 保存数据
-        table.append({'name': name[0], 'area': str(url_list[i]['上海有色网'][0]), 'date': date[0], 'price': price[0],
+        table.append({'name': name[0], 'area': str(url_list[i]['上海有色网'][0]), 'date': date[0], 'price':price,
                       'add_time': now_time})
 
     return table
@@ -277,30 +278,30 @@ def saveToMysql(data):
 
 
 if __name__ == '__main__':
-    # 获取中华商务网1
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
-    chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
-
-    # 获取中华商务网2
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
-    chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
-
-    # 获取中华商务网3
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
-    chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
-
-    # 获取中华商务网4
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
-    chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
-
-    # 获取中华商务网5
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
-    chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
+    # # 获取中华商务网1
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
+    # chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
+    #
+    # # 获取中华商务网2
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
+    # chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
+    #
+    # # 获取中华商务网3
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
+    # chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
+    #
+    # # 获取中华商务网4
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
+    # chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
+    #
+    # # 获取中华商务网5
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
+    # chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
 
     # 获取上海有色网url
     shangHaiYouSeUrl = getUrlList('./Data/RawUrl.csv', '上海有色网')
@@ -321,5 +322,5 @@ if __name__ == '__main__':
     data_5 = pd.merge(data_4, data6, how='outer')
 
     print(data_5)
-    # 保存mysql
-    saveToMysql(data_5)
+    # # 保存mysql
+    # saveToMysql(data_5)

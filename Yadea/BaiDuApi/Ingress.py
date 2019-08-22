@@ -23,7 +23,7 @@ def getGaoDeApi(keywords):
     # 保存数据list
     storeList=[]
     # 获取循环爬取的城市
-    provinceFile = fileUtils().getCsvFile('H:\Pythons\PyData\PyScrapy\Yadea\BaiDuApi\Datas\province.csv')
+    provinceFile = fileUtils().getCsvFile('./Datas/province.csv')
     for provinceItems in provinceFile:
         cityQuery = provinceItems[0]
         # 判断循环次数
@@ -52,10 +52,13 @@ def getGaoDeApi(keywords):
                 lonlat = items['location'].split(',')
                 lat = lonlat[0]
                 lng = lonlat[1]
+                tel = items["tel"]
+                if (tel == []):
+                    tel="无"
                 province = items['pname']
                 city = items['cityname']
                 area = items['adname']
-                storeDict = {'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area}
+                storeDict = {'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
                 print(storeDict)
                 storeList.append(storeDict)
     # 保存数据
@@ -103,4 +106,4 @@ if __name__ == '__main__':
     # getBaiDuApi('台铃','125',2)
     # getShiJieDianDongChe()
     #琼山区、龙华区、秀英区、美兰区
-    getGaoDeApi('一点点')
+    getGaoDeApi('台铃')
