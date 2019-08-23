@@ -278,30 +278,30 @@ def saveToMysql(data):
 
 
 if __name__ == '__main__':
-    # # 获取中华商务网1
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
-    # chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
-    #
-    # # 获取中华商务网2
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
-    # chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
-    #
-    # # 获取中华商务网3
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
-    # chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
-    #
-    # # 获取中华商务网4
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
-    # chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
-    #
-    # # 获取中华商务网5
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
-    # chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
+    # 获取中华商务网1
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
+    chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
+
+    # 获取中华商务网2
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
+    chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
+
+    # 获取中华商务网3
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
+    chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
+
+    # 获取中华商务网4
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
+    chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
+
+    # 获取中华商务网5
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
+    chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
+    saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
 
     # 获取上海有色网url
     shangHaiYouSeUrl = getUrlList('./Data/RawUrl.csv', '上海有色网')
@@ -322,5 +322,5 @@ if __name__ == '__main__':
     data_5 = pd.merge(data_4, data6, how='outer')
 
     print(data_5)
-    # # 保存mysql
-    # saveToMysql(data_5)
+    # 保存mysql
+    saveToMysql(data_5)
