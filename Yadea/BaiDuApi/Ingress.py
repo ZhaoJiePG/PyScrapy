@@ -13,21 +13,25 @@ http://www.qqddc.com/jxs.do?method=list&pb=40&pn=2
 import json
 from time import sleep
 
+import pandas as pd
 import requests
 from lxml import etree
 
 from fileUtils import fileUtils
+import os
+
+
 
 # 高德接口url
 def getGaoDeApi(keywords):
     # 保存数据list
     storeList=[]
     # 获取循环爬取的城市
-    provinceFile = fileUtils().getCsvFile('./Datas/province.csv')
+    provinceFile = fileUtils().getCsvFile('./Datas/citycode_gaode.csv')
     for provinceItems in provinceFile:
         cityQuery = provinceItems[0]
         # 判断循环次数
-        url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=cc59dda499458518a676fb0795bf235c&city={1}&offset=20' \
+        url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=59ed4a47216c3d36fef7397e8df1e903&city={1}&offset=20' \
             .format(keywords,cityQuery)
         response = requests.get(url).text
         # 获取总页数
@@ -36,74 +40,74 @@ def getGaoDeApi(keywords):
         # 开始循环
         for page in range(1,count):
             print('开始爬取：'+cityQuery+'-'+keywords+'-第'+str(page)+'页数据')
-            # 百度接口url
-            url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=cc59dda499458518a676fb0795bf235c&city={1}&offset=20&page={2}'\
+            # 高德接口url
+            url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=59ed4a47216c3d36fef7397e8df1e903&city={1}&offset=20&page={2}'\
                 .format(keywords,cityQuery,page)
             print(url)
             response = requests.get(url).text
-            sleep(0.1)
+            sleep(0.2)
             # 解析json
             datasList = json.loads(response)['pois']
             for items in datasList:
                 name = items['name']
                 address = items['address']
                 if (address == []):
-                    address = '无'
+                    address = ''
                 lonlat = items['location'].split(',')
                 lat = lonlat[0]
                 lng = lonlat[1]
                 tel = items["tel"]
-                if (tel == []):
-                    tel="无"
                 province = items['pname']
                 city = items['cityname']
                 area = items['adname']
-                storeDict = {'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
+                # 判断是否为空
+                if (tel == [] ):
+                    tel="无"
+                if (province == [] ):
+                    province="无"
+                if (city == [] ):
+                    city="无"
+                if (area == [] ):
+                    area="无"
+                topic=keywords.replace('电动','')
+                storeDict = {'topic':keywords,'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
                 print(storeDict)
                 storeList.append(storeDict)
     # 保存数据
     # print(storeList)
-    fileUtils().saveAsCsv(storeList,'{0}'.format(keywords))
+    fileUtils().saveAsCsv(storeList,'StoreInfo/{0}'.format(keywords))
 
-# 百度接口url
-def getBaiDuApi(query,region,num):
-    print("爬取 "+region+"====="+query+" 门店信息")
-    # 保存数据list
-    storeList=[]
-    # 百度接口url
-    url = 'http://api.map.baidu.com/place/v2/search?query={0}&region={1}&output=json&ak=K2WGZeDWlluoHpEpt5qo5Sx6VNyvffLB&page_size=20&page_num={2}'.format(query,region,num)
-    response = requests.get(url).text
-    # 解析json
-    datasList = json.loads(response)
-    results = datasList['results']
-    for item in results:
-        # 名称
-        name = item['name']
-        # 经纬度
-        lat = item['location']['lat']
-        lng = item['location']['lng']
-        # 地址
-        address = item['address']
-        # 省市区县
-        province = item['province']
-        city = item['city']
-        area = item['area']
-        storeList.append({'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area})
-    print(storeList)
-    fileUtils().saveAsCsv(storeList,'BaiDu_{0}_{1}_{2}'.format(region,query,num))
+# 合并csv文件
+def mergeCsv():
+    # 获取文件夹下的所有文件数
+    fileList=''
+    for dirs in os.walk('./Datas/StoreInfo'):
+        fileList = dirs[2]
+    resData = pd.read_csv('./Datas/dataFrame.csv')
+    # 循环读数据
+    for fileName in fileList:
+        # 合并数据集
+        csvFile='./Datas/StoreInfo/{0}'.format(fileName)
+        print('开始合并'+str(csvFile)+'数据')
+        pdData = pd.read_csv(csvFile,encoding='utf-8')
+        # 取数据交集
+        resData = pd.merge(resData , pdData, how='outer')
 
-# 世界电动车
-def getShiJieDianDongChe():
-    url = 'http://www.qqddc.com/jxs.do?method=list&pb=40&pn=2'
-    response = requests.get(url).text
-    # 转换xpath
-    xpathData = etree.HTML(response)
-    a = xpathData.xpath('/html/body/div[3]/div[3]/div[3]/div[1]/ul/li[1]/div[2]/h1/a/text()')
-    print(a)
+    resData = resData.astype(object).where(pd.notnull(resData), None)
+    print(resData)
+    # 保存文件
+    fileUtils().saveAsCsv(resData,'AllStoreInfo')
 
+    # # 保存数据库
+    # saveToMysql(resData,'spider','storeareas_xingri')
 
 if __name__ == '__main__':
-    # getBaiDuApi('台铃','125',2)
-    # getShiJieDianDongChe()
-    #琼山区、龙华区、秀英区、美兰区
-    getGaoDeApi('台铃')
+    # 爬取数据
+    storeFile = fileUtils().getCsvFile('./Datas/store.csv')
+    for storeItems in storeFile:
+        storeQuery = storeItems[0]
+        print(storeQuery)
+        # 获取数据
+        getGaoDeApi(storeQuery)
+    # 合并保存数据
+    # mergeCsv()

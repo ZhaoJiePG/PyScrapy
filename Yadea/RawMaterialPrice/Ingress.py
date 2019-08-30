@@ -1,5 +1,4 @@
 # Author:Aliex ZJ
-# !/usr/bin/env python3
 # -*- coding:utf-8 -*-
 import datetime
 
@@ -192,7 +191,7 @@ def praseShangHaiYouSe(url_list):
 
     # 定义请求头
     headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0',
         'cookie': 'SMM_device_id=223c8667-1512-582b-87ff-eb162aa2e3e4; SMM_session_id=e24de27d-b7dc-559f-9dfb-8f0892bd9934; SMM_session_start_timestamp=1566432783777; Hm_lvt_9734b08ecbd8cf54011e088b00686939=1566432784; Hm_lpvt_9734b08ecbd8cf54011e088b00686939=1566433111; SMM_auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjZWxscGhvbmUiOiIxMzYxNjY4MzM1MCIsImNvbXBhbnlfaWQiOjAsImNvbXBhbnlfc3RhdHVzIjowLCJjcmVhdGVfYXQiOjE1NjY0MzMwOTksImVtYWlsIjoia2FpamlhbmcudGFvQGNoaW5heGluemhpLmNvbSIsImVuX2VuZF90aW1lIjowLCJlbl9yZWdpc3Rlcl9zdGVwIjoxLCJlbl9yZWdpc3Rlcl90aW1lIjowLCJlbl9zdGFydF90aW1lIjowLCJlbl91c2VyX3R5cGUiOjAsImVuZF90aW1lIjoxNTgyNzMyNzk5LCJpc19tYWlsIjowLCJpc19waG9uZSI6MSwibGFuZ3VhZ2UiOiIiLCJseV9lbmRfdGltZSI6MCwibHlfc3RhcnRfdGltZSI6MCwibHlfdXNlcl90eXBlIjowLCJyZWdpc3Rlcl90aW1lIjoxMzYyMDE5NTYyLCJzdGFydF90aW1lIjoxNTE5NTc0NDAwLCJ1c2VyX2lkIjo0MTE1OTcsInVzZXJfbmFtZSI6InhpbnpoaWRpYW5qaTAyIiwidXNlcl90eXBlIjoyLCJ1dWlkX3NoYTI1NiI6ImNkZjRhMDA3ZTJiMDJhMGM0OWZjOWI3Y2NmYmI4YTEwYzY0NGY2MzVlMTc2NWRjZjJhN2FiNzk0ZGRjN2VkYWMiLCJ6eF9lbmRfdGltZSI6MCwienhfc3RhcnRfdGltZSI6MCwienhfdXNlcl90eXBlIjowfQ.QA9Zhr8sezkTSLerMIcLEstV0LEE_esnHlrDz_wOpeA; referer_code=https%3A%2F%2Fhq.smm.cn%2Ftong%2Fcategory%2F201102250376'
     }
 
@@ -309,11 +308,17 @@ if __name__ == '__main__':
     saveAsCsv(shangHaiYouSeData, '上海有色网')
 
     data1 = pd.read_csv('./Data/上海有色网.csv')
+    print(data1)
     data2 = pd.read_csv('./Data/中华商务网1.csv')
+    print(data2)
     data3 = pd.read_csv('./Data/中华商务网2.csv')
+    print(data3)
     data4 = pd.read_csv('./Data/中华商务网3.csv')
+    print(data4)
     data5 = pd.read_csv('./Data/中华商务网4.csv')
+    print(data5)
     data6 = pd.read_csv('./Data/中华商务网5.csv')
+    print(data6)
     # 取数据交集
     data_1 = pd.merge(data1, data2, how='outer')
     data_2 = pd.merge(data_1, data3, how='outer')
