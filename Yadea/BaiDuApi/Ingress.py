@@ -10,6 +10,7 @@ https://restapi.amap.com/v3/place/text?keywords=台铃&key=cc59dda499458518a676f
 世界电动车网
 http://www.qqddc.com/jxs.do?method=list&pb=40&pn=2
 '''
+import datetime
 import json
 from time import sleep
 
@@ -23,7 +24,11 @@ import os
 
 
 # 高德接口url
+from mysqlUtils import saveToMysql
+
+
 def getGaoDeApi(keywords):
+    now_time = datetime.datetime.now().strftime('%Y-%m-%d')
     # 保存数据list
     storeList=[]
     # 获取循环爬取的城市
@@ -69,8 +74,8 @@ def getGaoDeApi(keywords):
                     city="无"
                 if (area == [] ):
                     area="无"
-                topic=keywords.replace('电动','')
-                storeDict = {'topic':keywords,'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
+                topic=keywords.replace('电动车','')
+                storeDict = {'add_time':now_time,'topic':topic,'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
                 print(storeDict)
                 storeList.append(storeDict)
     # 保存数据
@@ -102,12 +107,18 @@ def mergeCsv():
     # saveToMysql(resData,'spider','storeareas_xingri')
 
 if __name__ == '__main__':
-    # 爬取数据
-    storeFile = fileUtils().getCsvFile('./Datas/store.csv')
-    for storeItems in storeFile:
-        storeQuery = storeItems[0]
-        print(storeQuery)
-        # 获取数据
-        getGaoDeApi(storeQuery)
+    # # 爬取数据
+    # storeFile = fileUtils().getCsvFile('./Datas/store.csv')
+    # for storeItems in storeFile:
+    #     storeQuery = storeItems[0]
+    #     print(storeQuery)
+    #     # 获取数据
+    #     getGaoDeApi(storeQuery)
     # 合并保存数据
     # mergeCsv()
+    # 数据保存mysql
+
+    resData = pd.read_csv('./Datas/AllStoreInfo.csv')
+    # pandans空字符串保存None
+    resData = resData.astype(object).where(pd.notnull(resData), None)
+    saveToMysql(resData,'spider','gd_store_info')

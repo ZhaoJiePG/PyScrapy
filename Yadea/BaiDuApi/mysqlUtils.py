@@ -5,7 +5,7 @@
 # 保存数据到mysql
 import pymysql
 def saveToMysql(data,databaseName,tableName):
-    config = dict(host='10.149.1.154', user='root', password='root',
+    config = dict(host='10.149.1.232', user='root', password='root',
                   cursorclass=pymysql.cursors.DictCursor)
     # 建立连接
     conn = pymysql.Connect(**config)
@@ -52,6 +52,7 @@ def saveToMysql(data,databaseName,tableName):
         # executemany批量操作 插入数据 批量操作比逐个操作速度快很多
         cursor.executemany('INSERT INTO {} VALUES ({})'.format(table_name, s), values)
 
+    make_table_sql(data)
     csv2mysql(databaseName, tableName, data)
 
     conn.close()
