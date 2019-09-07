@@ -107,6 +107,7 @@ def mergeCsv():
     # saveToMysql(resData,'spider','storeareas_xingri')
 
 if __name__ == '__main__':
+    now_time = datetime.datetime.now().strftime('%Y%m%d')
     # # 爬取数据
     # storeFile = fileUtils().getCsvFile('./Datas/store.csv')
     # for storeItems in storeFile:
@@ -114,11 +115,12 @@ if __name__ == '__main__':
     #     print(storeQuery)
     #     # 获取数据
     #     getGaoDeApi(storeQuery)
+
     # 合并保存数据
     # mergeCsv()
-    # 数据保存mysql
 
+    # 数据保存mysql
     resData = pd.read_csv('./Datas/AllStoreInfo.csv')
     # pandans空字符串保存None
     resData = resData.astype(object).where(pd.notnull(resData), None)
-    saveToMysql(resData,'spider','gd_store_info')
+    saveToMysql(resData,'spider','gd_store_info_{0}'.format(now_time))
