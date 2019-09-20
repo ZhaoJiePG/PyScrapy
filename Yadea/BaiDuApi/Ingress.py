@@ -108,16 +108,16 @@ def mergeCsv():
 
 if __name__ == '__main__':
     now_time = datetime.datetime.now().strftime('%Y%m%d')
-    # # 爬取数据
-    # storeFile = fileUtils().getCsvFile('./Datas/store.csv')
-    # for storeItems in storeFile:
-    #     storeQuery = storeItems[0]
-    #     print(storeQuery)
-    #     # 获取数据
-    #     getGaoDeApi(storeQuery)
+    # 爬取数据
+    storeFile = fileUtils().getCsvFile('./Datas/store.csv')
+    for storeItems in storeFile:
+        storeQuery = storeItems[0]
+        print(storeQuery)
+        # 获取数据
+        getGaoDeApi(storeQuery)
 
     # 合并保存数据
-    # mergeCsv()
+    mergeCsv()
 
     # 数据保存mysql
     resData = pd.read_csv('./Datas/AllStoreInfo.csv')
