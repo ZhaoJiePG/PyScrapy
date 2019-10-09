@@ -43,7 +43,6 @@ date = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[3]/text()')
 print(date)
 name = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[1]/text()')
 num = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[2]/text()')
-
 res_name = str(name[0]) + '(' + str(num[0]) + ')'
 price = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[4]/text()')
 table.append({'name': res_name, 'date': date[0], 'price': price[0]})
