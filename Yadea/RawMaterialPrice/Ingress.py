@@ -107,6 +107,7 @@ def praseChinaBusiness3(url_list):
             price = selector.xpath('//tr[@class="dmain_right_tab_list"][{0}]/td[5]/text()'.format(j))
             # 判断是否重复城市存在
             if area[0] == str(url_list[i]['中华商务网3'][0]):
+                print(area[0])
                 area_list = []
                 for x in table:
                     area_list.append(x['area'])
@@ -174,6 +175,7 @@ def praseChinaBusiness5(url_list):
         # 解析
         selector = etree.HTML(context)
         date = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[3]/text()')
+        print(type(date))
         name = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[1]/text()')
         num = selector.xpath('//tr[@class="dmain_right_tab_list"][2]/td[2]/text()')
         res_name = str(name[0]) + '(' + str(num[0]) + ')'
@@ -278,29 +280,37 @@ def saveToMysql(data):
 
 if __name__ == '__main__':
     # 获取中华商务网1
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
-    chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
+    # chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
 
     # 获取中华商务网2
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
-    chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
+    # chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
 
     # 获取中华商务网3
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
-    chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
+    # chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
 
     # 获取中华商务网4
-    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
-    chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
+    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
+    # chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
+    # saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
 
     # 获取中华商务网5
     chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')
-    chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
-    saveAsCsv(chinaBusinessUrlData5, '中华商务网5')
+    try:
+        chinaBusinessUrlData5 = praseChinaBusiness5(chinaBusinessUrl)
+    except IndexError:
+        print("Error: 没有找到网页内容")
+
+    else:
+        saveAsCsv(praseChinaBusiness5(chinaBusinessUrl), '中华商务网5')
+        print("网页正常")
+
+
 
     # 获取上海有色网url
     shangHaiYouSeUrl = getUrlList('./Data/RawUrl.csv', '上海有色网')
@@ -328,4 +338,4 @@ if __name__ == '__main__':
 
     print(data_5)
     # 保存mysql
-    saveToMysql(data_5)
+    # saveToMysql(data_5)
