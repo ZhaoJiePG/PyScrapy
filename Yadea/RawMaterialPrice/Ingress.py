@@ -280,24 +280,47 @@ def saveToMysql(data):
 
 if __name__ == '__main__':
     # 获取中华商务网1
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
-    # chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData1, '中华商务网1')
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网1')
+    try:
+        chinaBusinessUrlData1 = praseChinaBusiness1(chinaBusinessUrl)
+    except IndexError:
+        print("Error: 没有找到网页内容")
+    else:
+        saveAsCsv(praseChinaBusiness1(chinaBusinessUrl), '中华商务网1')
+        print("网页正常")
+
 
     # 获取中华商务网2
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
-    # chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData2, '中华商务网2')
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网2')
+    try:
+        chinaBusinessUrlData2 = praseChinaBusiness2(chinaBusinessUrl)
+    except IndexError:
+        print("Error: 没有找到网页内容")
+    else:
+        saveAsCsv(praseChinaBusiness2(chinaBusinessUrl), '中华商务网2')
+        print("网页正常")
+
 
     # 获取中华商务网3
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
-    # chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData3, '中华商务网3')
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网3')
+    try:
+        chinaBusinessUrlData3 = praseChinaBusiness3(chinaBusinessUrl)
+    except IndexError:
+        print("Error: 没有找到网页内容")
+    else:
+        saveAsCsv(praseChinaBusiness3(chinaBusinessUrl), '中华商务网3')
+        print("网页正常")
+
 
     # 获取中华商务网4
-    # chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
-    # chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
-    # saveAsCsv(chinaBusinessUrlData4, '中华商务网4')
+    chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网4')
+    try:
+        chinaBusinessUrlData4 = praseChinaBusiness4(chinaBusinessUrl)
+    except IndexError:
+        print("Error: 没有找到网页内容")
+    else:
+        saveAsCsv(praseChinaBusiness4(chinaBusinessUrl), '中华商务网4')
+        print("网页正常")
 
     # 获取中华商务网5
     chinaBusinessUrl = getUrlList('./Data/RawUrl.csv', '中华商务网5')

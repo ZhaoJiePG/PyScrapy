@@ -40,44 +40,48 @@ def getGaoDeApi(keywords):
             .format(keywords,cityQuery)
         response = requests.get(url).text
         # 获取总页数
-        count = json.loads(response)['count']
-        count = int(int(count)/20+2)
-        # 开始循环
-        for page in range(1,count):
-            print('开始爬取：'+cityQuery+'-'+keywords+'-第'+str(page)+'页数据')
-            # 高德接口url
-            url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=59ed4a47216c3d36fef7397e8df1e903&city={1}&offset=20&page={2}'\
-                .format(keywords,cityQuery,page)
-            print(url)
-            response = requests.get(url).text
-            sleep(0.2)
-            # 解析json
-            datasList = json.loads(response)['pois']
-            for items in datasList:
-                name = items['name']
-                address = items['address']
-                if (address == []):
-                    address = ''
-                lonlat = items['location'].split(',')
-                lat = lonlat[0]
-                lng = lonlat[1]
-                tel = items["tel"]
-                province = items['pname']
-                city = items['cityname']
-                area = items['adname']
-                # 判断是否为空
-                if (tel == [] ):
-                    tel="无"
-                if (province == [] ):
-                    province="无"
-                if (city == [] ):
-                    city="无"
-                if (area == [] ):
-                    area="无"
-                topic=keywords.replace('电动车','')
-                storeDict = {'add_time':now_time,'topic':topic,'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
-                print(storeDict)
-                storeList.append(storeDict)
+        try:
+            count = json.loads(response)['count']
+            count = int(int(count)/20+2)
+            # 开始循环
+            for page in range(1,count):
+                print('开始爬取：'+cityQuery+'-'+keywords+'-第'+str(page)+'页数据')
+                # 高德接口url
+                url = 'https://restapi.amap.com/v3/place/text?keywords={0}&key=59ed4a47216c3d36fef7397e8df1e903&city={1}&offset=20&page={2}' \
+                    .format(keywords,cityQuery,page)
+                print(url)
+                response = requests.get(url).text
+                sleep(0.2)
+                # 解析json
+                datasList = json.loads(response)['pois']
+                for items in datasList:
+                    name = items['name']
+                    address = items['address']
+                    if (address == []):
+                        address = ''
+                    lonlat = items['location'].split(',')
+                    lat = lonlat[0]
+                    lng = lonlat[1]
+                    tel = items["tel"]
+                    province = items['pname']
+                    city = items['cityname']
+                    area = items['adname']
+                    # 判断是否为空
+                    if (tel == [] ):
+                        tel="无"
+                    if (province == [] ):
+                        province="无"
+                    if (city == [] ):
+                        city="无"
+                    if (area == [] ):
+                        area="无"
+                    topic=keywords.replace('电动车','')
+                    storeDict = {'add_time':now_time,'topic':topic,'name':name,'lat':lat,'lng':lng,'address':address,'province':province,'city':city,'area':area,'tel':tel}
+                    print(storeDict)
+                    storeList.append(storeDict)
+        except BaseException:
+            print('不符合条件')
+
     # 保存数据
     # print(storeList)
     fileUtils().saveAsCsv(storeList,'StoreInfo/{0}'.format(keywords))
