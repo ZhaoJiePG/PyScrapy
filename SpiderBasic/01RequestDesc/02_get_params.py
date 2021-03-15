@@ -30,4 +30,5 @@ def get_method_params():
     # 保存到本地
     with open("02-encode.html","w",encoding="utf-8")as f:
         f.write(data)
+
 get_method_params()
